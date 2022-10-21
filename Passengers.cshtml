@@ -1,0 +1,69 @@
+﻿@using Assignment_Flightss
+@using Assignment_Flightss.Models;
+@using  Assignment_Flightss.Controllers;
+
+
+@model AirportModel
+
+@{
+    ViewBag.Title = "GetPassangerList";
+}
+
+<h2>PASSENGERS EDITOR</h2>
+@using (Html.BeginForm("PassangerEditor","Passangerdb"))
+{
+
+
+    <div class="row">
+    <div class="col-md-12">
+         <div class="form-group">
+        @Html.LabelFor(x=>x.Nameofpassenger)
+
+         @Html.TextBoxFor(x => x.Nameofpassenger, new { @class = "form-control" })
+         @Html.ValidationMessageFor(m => m.Nameofpassenger, "", new { @class = "text-danger  " })
+        </div>
+    </div>
+    <div class="col-md-12">
+       <div class="form-group">
+        <div>
+          <label for="mobilenum">MobileNo</label>
+            @Html.TextBoxFor(x=>x.MobileNo,"",new{@class = "form-control"})
+        </div>
+       </div>
+    </div>
+       <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Age">Age</label>
+                               @Html.TextBoxFor(x=>x.Age,"",new{@class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="city">cities</label>
+                                @Html.DropDownListFor(x => x.CitiesID, Model.CitiesList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="FlightID">FlightID</label>
+                               @Html.DropDownListFor(x => x.FlightID, Model.FlightList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                   
+                  <input type="submit" value="Submit" class="btn btn-primary" />
+                   @*<a  class="btn btn-primary" onclick="TATAeditor.saveTATA()" id="lnkSubmitDetails">Submit </a>*@
+               </div>      
+  <div/>
+
+    
+                 
+}
+
+
+                   

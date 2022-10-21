@@ -1,0 +1,109 @@
+﻿@using Assignment_Flightss
+@using Assignment_Flightss.Models;
+
+@model AirportModel
+@{
+    ViewBag.Title = "GetPassangerList";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h3> Passenger List</h3>
+        </div>
+        <div class="col-md-6" style="margin-top: 10px">
+            <div style="float: right">
+                @Html.ActionLink("Add New Passenger", "PassengerEditor",null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 15px">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                      <tr>
+                          <th>PassengerID</th>
+                        <th>Nameofpassenger</th>
+                        <th>Age</th>
+                        <th>MobileNo</th>
+                        <th>Address</th>
+                        <th>CitiesID</th>
+                        <th>FlightID</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                 <tbody id="tbody-Passenger-list">
+                    @if (Model.Passanger.Count > 0)
+                    {
+                        foreach (Passangerdb passengerdb in Model.GetPassangerList)
+                        {
+                            <tr id="tr_@passengerdb.passengerID">
+                                <td>@passengerdb.UserName</td>
+                                <td>@passengerdb.Age</td>
+                                <td>@passengerdb.Address</td>
+                                <td>@passengerdb.MobileNo</td>
+                                <td>
+                                    @if (passengerdb.Citiesdb != null)
+                                    {
+                                        @passengerdb.Citiesdb.CityName
+                                    }
+                                </td>
+                                <td>
+                                    @if (passengerdb.Flightdb != null)
+                                    {
+                                        @passengerdb.Flightdb.Nameofflight
+                                    }
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("Edit", "PassengerEditor", new { passengerId = Passangerdb.passengerID}, new { @class = "btn btn-primary" })
+
+                                    @*<a class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        Edit
+                                    </a>*@
+                                    <a class="btn btn-danger" onclick="passengerApp.delete(@Passangerdb.passengerID)">
+                                       Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var passengerApp = {
+        delete: function (passengerId) {
+
+            $.ajax({
+                url: "/Passenger/deletePassenger",
+                type: "POST",
+                data: {
+                    passengerId: passengerId
+                },
+                success: function (response) {
+
+                    if (response) {
+                        alert("passenger Deleted");
+                        $("#tbody-Passenger-list").find("#tr_" + passengerId).remove();
+
+                    } else {
+                        alert("Some error occured when deleting Passenger");
+                    }
+
+                },
+                error: function () {
+                    alert("Some error occured when deleting Passenger");
+                }
+    }
+            )
+        }
+    }
+</script>
+
+
+  
